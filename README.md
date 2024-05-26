@@ -102,13 +102,14 @@ O layout da aplicação está disponível no Figma:
 
 Este projeto é dividido em duas partes:
 1. Frontend Web (pasta web)
+2. Backend (Java Spring)
 
 💡 Tanto o Frontend Web
 
 ### Pré-requisitos <a name="pre-requisitos"></a>
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Java](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html).
 Além disso, é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/).
 
 #### 🎲 Rodando a fake API <a name="rodando-o-backend"></a>
