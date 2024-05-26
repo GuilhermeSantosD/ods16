@@ -1,9 +1,9 @@
 <h1 align="center">
-     🥣 <a href="#" alt=""> ODS 16 </a>
+      <a href="#" alt=""> ODS 16 </a>
 </h1>
 
 <h3 align="center">
-     App web/mobile de cardápio para restaurante que permite criar, atualizar e remover pratos, além de fazer pedidos 🍽️
+     A ODS 16 faz parte dos 17 Objetivos de Desenvolvimento Sustentável (ODS) estabelecidos pela Organização das Nações Unidas (ONU) como um plano global para alcançar um futuro mais sustentável e equitativo até 2030.
 </h3>
 
 <p align="center">
@@ -32,41 +32,48 @@ Tabela de conteúdos
 * [Funcionalidades](#funcionalidades)
 * [Layout](#layout)
     * [Web](#layout-web)
-    * [Mobile](#layout-mobile)
 * [Como executar o projeto](#como-executar-o-projeto)
     * [Pré-requisitos](#pre-requisitos)
     * [Rodando a fake API](#rodando-o-backend)
     * [Rodando a aplicação web (Frontend)](#rodando-a-aplicacao-web-frontend)
-    * [Rodando a aplicação mobile (Frontend)](#rodando-a-aplicacao-mobile)
 * [Tecnologias](#tecnologias)
     * [Website](#tecnologias-website)
-    * [Mobile](#tecnologias-mobile)
     * [Utilitários](#utilitarios)
 * [Como contribuir no projeto](#como-contribuir)
 * [Autor](#autor)
 * [Licença](#licenca)
 
+## 🌍 ODS 16: Paz, Justiça e Instituições Eficazes <a name="ods-16"></a>
 
+A ODS 16 faz parte dos 17 Objetivos de Desenvolvimento Sustentável (ODS) estabelecidos pela Organização das Nações Unidas (ONU) como um plano global para alcançar um futuro mais sustentável e equitativo até 2030.
 
-## 💻 Sobre o projeto <a name="sobre-o-projeto"></a>
+**Objetivo:**
+A ODS 16 visa promover sociedades pacíficas e inclusivas para o desenvolvimento sustentável, proporcionar acesso à justiça para todos e construir instituições eficazes, responsáveis e inclusivas em todos os níveis.
 
-🥣 O ODS 16 é um app de cardápio para restaurante com interface para web que permite a criação, remoção e atualização de pratos de comida, e interface mobile que permite a realização de pedidos e escolha de pratos favoritos.
+**Principais Metas:**
+1. **Reduzir significativamente todas as formas de violência e as taxas de mortalidade relacionadas em todos os lugares.**
+2. **Acabar com o abuso, exploração, tráfico e todas as formas de violência e tortura contra crianças.**
+3. **Promover o Estado de Direito, em níveis nacional e internacional, e garantir a igualdade de acesso à justiça para todos.**
+4. **Reduzir substancialmente a corrupção e o suborno em todas as suas formas.**
+5. **Desenvolver instituições eficazes, responsáveis e transparentes em todos os níveis.**
+6. **Garantir a tomada de decisão responsiva, inclusiva, participativa e representativa em todos os níveis.**
+7. **Ampliar e fortalecer a participação dos países em desenvolvimento nas instituições de governança global.**
+8. **Proporcionar identidade legal para todos, incluindo o registro de nascimento.**
+9. **Assegurar o acesso público à informação e proteger as liberdades fundamentais, em conformidade com a legislação nacional e os acordos internacionais.**
+
+**Importância:**
+A ODS 16 é essencial para a criação de sociedades justas, equitativas e inclusivas. Sem paz, estabilidade, direitos humanos e governança eficaz baseada no Estado de Direito, não podemos esperar um desenvolvimento sustentável. A promoção de sociedades pacíficas e inclusivas é fundamental para alcançar os outros ODS e criar um ambiente onde todos os indivíduos possam prosperar.
 
 ---
 
 ## ⚙️ Funcionalidades <a name="funcionalidades"></a>
 
-- [x] Restaurantes podem utilizar a plataforma web para:
-    - [x] Cadastrar novos pratos
-    - [x] Editar pratos
-    - [x] Listar os pratos
-    - [x] Remover pratos
-    - [x] Alterar a disponibilidade dos pratos
-- [x] Os usuários têm acesso ao app mobile, onde podem:
-    - [x] Listar os pratos de comida e categorias
-    - [x] Filtrar pratos de comida por busca ou por categorias
-    - [x] Listar seus pratos favoritos
-    - [x] Realizar um pedido
+- [x] Os usuarios podem utilizar a plataforma web para:
+    - [x] Registrar Denuncias. 
+    - [x] SOS para Acidentes
+    - [x] 
+    - [x] 
+    - [x] 
 
 ---
 
@@ -90,27 +97,13 @@ O layout da aplicação está disponível no Figma:
   <img alt="Screenshot web 2" src="./assets/web-prato.svg" width="400px">
 </p>
 
-### Mobile <a name="layout-mobile"></a>
-
-<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="Screenshot mobile 1" src="./assets/mobile-splash.svg" width="200px">
-
-  <img alt="Screenshot mobile 2" src="./assets/mobile-home.svg" width="200px">
-
-  <img alt="Screenshot mobile 3" src="./assets/mobile-orders.svg" width="200px">
-
-  <img alt="Screenshot mobile 4" src="./assets/mobile-favorites.svg" width="200px">
-</p>
-
----
 
 ## 🚀 Como executar o projeto <a name="como-executar-o-projeto"></a>
 
 Este projeto é dividido em duas partes:
 1. Frontend Web (pasta web)
-2. Frontend Mobile (pasta mobile)
 
-💡 Tanto o Frontend Web quanto o Mobile utilizam uma fake API que roda na porta 3333
+💡 Tanto o Frontend Web
 
 ### Pré-requisitos <a name="pre-requisitos"></a>
 
