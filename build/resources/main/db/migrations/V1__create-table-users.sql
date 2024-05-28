@@ -1,4 +1,0 @@
-create table users{
-
-
-
