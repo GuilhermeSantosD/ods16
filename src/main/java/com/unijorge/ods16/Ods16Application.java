@@ -2,10 +2,12 @@ package com.unijorge.ods16;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.TimeZone;
 
+@EnableAutoConfiguration
 @SpringBootApplication
 public class Ods16Application {
 
