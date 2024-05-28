@@ -23,7 +23,7 @@ public class FuncionarioController {
 
     @GetMapping("/cargos")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Cargo> getCargos() {
+    public List<Cargo> getCar() {
         return Arrays.asList(Cargo.values());
     }
 
