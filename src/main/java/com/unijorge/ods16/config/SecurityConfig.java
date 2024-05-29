@@ -127,6 +127,10 @@ public class SecurityConfig {
                     registry.requestMatchers("/actuator/**").permitAll();
                     registry.requestMatchers("/health").permitAll();
                     registry.requestMatchers("/api/reports/create").permitAll();
+                    registry.requestMatchers("/api/reports/list").permitAll();
+                    registry.requestMatchers("/api/reports/list/{id}").permitAll();
+                    registry.requestMatchers("/api/reports/update/{id}").permitAll();
+                    registry.requestMatchers("/api/reports/delete/{id}").permitAll();
                     registry.anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)

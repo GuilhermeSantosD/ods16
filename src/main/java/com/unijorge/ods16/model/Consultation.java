@@ -17,7 +17,10 @@ public class Consultation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime appointmentDate;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime appointmentDate = LocalDateTime.now();
+
     private String details;
 
     @ManyToOne
