@@ -8,9 +8,11 @@ import com.unijorge.ods16.repository.SecurityPostRepository;
 import com.unijorge.ods16.repository.SecurityTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.unijorge.ods16.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SosService {
 
     @Autowired

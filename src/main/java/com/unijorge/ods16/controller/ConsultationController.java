@@ -1,8 +1,10 @@
 package com.unijorge.ods16.controller;
 
+
 import com.unijorge.ods16.model.Consultation;
 import com.unijorge.ods16.service.ConsultationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,4 +29,13 @@ public class ConsultationController {
         return consultationService.getConsultationById(id);
     }
 
+    @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Consultation update(@RequestBody Consultation consultation){return consultationService.createOrUpdate(consultation);}
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteConsulation (@PathVariable Long id){
+        consultationService.deleteConsulation(id);
+    }
 }

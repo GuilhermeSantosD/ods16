@@ -23,5 +23,12 @@ public class ConsultationService {
     public List<Consultation> getAllConsultations() {
         return consultationRepository.findAll();
     }
+    public Consultation createOrUpdate(Consultation consultation) {
+        return consultationRepository.save(consultation);
+    }
+
+    public void deleteConsulation(Long id) {
+        consultationRepository.deleteById(id);
+    }
 
 }

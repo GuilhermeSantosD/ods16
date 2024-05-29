@@ -19,7 +19,10 @@ public class Report {
     private Long id;
     private String title;
     private String description;
-    private LocalDateTime submissionDate;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime submissionDate = LocalDateTime.now();
+
     private String status;
 
     @ManyToOne

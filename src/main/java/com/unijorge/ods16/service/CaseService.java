@@ -24,4 +24,11 @@ public class CaseService {
     public List<Case> getAllCases() {
         return caseRepository.findAll();
     }
+    public Case createOrUpdate(Case denuncia) {
+        return caseRepository.save(denuncia);
+    }
+
+    public void deleteCase(Long id) {
+        caseRepository.deleteById(id);
+    }
 }

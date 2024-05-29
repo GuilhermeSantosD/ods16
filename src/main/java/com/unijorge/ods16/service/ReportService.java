@@ -1,10 +1,14 @@
 package com.unijorge.ods16.service;
 
+
 import com.unijorge.ods16.model.Report;
 import com.unijorge.ods16.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -14,6 +18,15 @@ public class ReportService {
     private ReportRepository reportRepository;
 
     public Report saveReport(Report report) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            report.setStatus("Pendente");
+        }
+
+        report.setSubmissionDate(LocalDateTime.now());
         return reportRepository.save(report);
     }
 
@@ -24,4 +37,27 @@ public class ReportService {
     public List<Report> getAllReports() {
         return reportRepository.findAll();
     }
+
+    public Report updateReport(Long id, Report report) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        Report existingReport = reportRepository.findById(id).orElse(null);
+        if (existingReport != null) {
+            existingReport.setTitle(report.getTitle());
+            existingReport.setDescription(report.getDescription());
+            if (isAdmin) {
+                existingReport.setStatus(report.getStatus());
+            }
+            return reportRepository.save(existingReport);
+        }
+        return null;
+    }
+
+
+    public void deleteReport(Long id) {
+        reportRepository.deleteById(id);
+    }
+
 }
