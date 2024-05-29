@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+
 @Entity
 @Getter
 @Setter
@@ -25,7 +26,11 @@ public class Report {
 
     private String status;
 
+    private boolean anonymous;
+
     @ManyToOne
     private User user;
+
+
 
 }

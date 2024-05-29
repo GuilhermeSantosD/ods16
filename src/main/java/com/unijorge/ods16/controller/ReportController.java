@@ -31,6 +31,7 @@ public class ReportController {
         return reportService.getReportById(id);
     }
 
+
     @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Report updateReport(@PathVariable Long id, @RequestBody Report report) {
@@ -39,9 +40,8 @@ public class ReportController {
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteReport (@PathVariable Long id){
+    public void deleteReport(@PathVariable Long id) {
         reportService.deleteReport(id);
     }
-
 
 }

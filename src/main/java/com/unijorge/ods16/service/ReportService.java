@@ -1,12 +1,12 @@
 package com.unijorge.ods16.service;
 
-
 import com.unijorge.ods16.model.Report;
+import com.unijorge.ods16.model.User;
 import com.unijorge.ods16.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +27,13 @@ public class ReportService {
         }
 
         report.setSubmissionDate(LocalDateTime.now());
+
+        if (!report.isAnonymous()) {
+            report.setUser((User) authentication.getPrincipal());
+        } else {
+            report.setUser(null);
+        }
+
         return reportRepository.save(report);
     }
 
@@ -55,9 +62,7 @@ public class ReportService {
         return null;
     }
 
-
     public void deleteReport(Long id) {
         reportRepository.deleteById(id);
     }
-
 }

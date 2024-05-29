@@ -7,13 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
 
@@ -36,8 +33,7 @@ import java.util.List;
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
-
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
     public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
@@ -45,14 +41,8 @@ public class SecurityConfig {
         this.unauthorizedHandler = unauthorizedHandler;
     }
 
-
     @Bean
-    public JwtAuthenticationEntryPoint unauthorizedHandler(){
-        return new JwtAuthenticationEntryPoint();
-    }
-
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 
@@ -62,14 +52,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-        return authenticationManagerBuilder.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -84,21 +67,31 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/api/**", config);
         return new CorsFilter(source);
     }
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors().configurationSource(corsConfigurationSource()) // Adicione isso para configurar o CORS
+                .cors().configurationSource(corsConfigurationSource())
                 .and()
-                .csrf().disable() // Desabilitar CSRF para simplificação
-                .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/api/**").permitAll()
+                .csrf().disable()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/swagger-resources/**", "/v2/api-docs/**", "/v3/api-docs/**", "/webjars/**", "/actuator/**", "/health").permitAll()
+                        .requestMatchers("/api/reports/**").authenticated()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(unauthorizedHandler)
+                )
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
+
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
@@ -108,36 +101,5 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("api/auth/signup").permitAll();
-                    registry.requestMatchers("/api/auth/**").permitAll();
-                    registry.requestMatchers("/api/user/checkUsernameAvailability").permitAll();
-                    registry.requestMatchers("/api/user/checkEmailAvailability").permitAll();
-                    registry.requestMatchers("/api/users/**").permitAll();
-                    registry.requestMatchers("/swagger-ui/**").permitAll();
-                    registry.requestMatchers("/swagger-resources/**").permitAll();
-                    registry.requestMatchers("/v2/api-docs/**").permitAll();
-                    registry.requestMatchers("/v3/api-docs/**").permitAll();
-                    registry.requestMatchers("/webjars/**").permitAll();
-                    registry.requestMatchers("/actuator/**").permitAll();
-                    registry.requestMatchers("/health").permitAll();
-                    registry.requestMatchers("/api/reports/create").permitAll();
-                    registry.requestMatchers("/api/reports/list").permitAll();
-                    registry.requestMatchers("/api/reports/list/{id}").permitAll();
-                    registry.requestMatchers("/api/reports/update/{id}").permitAll();
-                    registry.requestMatchers("/api/reports/delete/{id}").permitAll();
-                    registry.anyRequest().authenticated();
-                })
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
-.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        return http.build();
     }
 }
