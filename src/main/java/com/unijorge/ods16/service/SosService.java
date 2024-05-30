@@ -1,13 +1,14 @@
 package com.unijorge.ods16.service;
 
 
-import com.unijorge.ods16.model.SecurityPost;
-import com.unijorge.ods16.model.SecurityTip;
-import com.unijorge.ods16.model.User;
-import com.unijorge.ods16.repository.SecurityPostRepository;
-import com.unijorge.ods16.repository.SecurityTipRepository;
+
+import com.unijorge.ods16.model.Report;
+import com.unijorge.ods16.model.Sos;
+import com.unijorge.ods16.repository.SosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.unijorge.ods16.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,47 +17,40 @@ import java.util.List;
 public class SosService {
 
     @Autowired
-    private SecurityTipRepository securityTipRepository;
-    @Autowired
-    private SecurityPostRepository securityPostRepository;
+    private SosRepository sosRepository;
     @Autowired
     private UserRepository userRepository;
 
-    public List<SecurityTip> getAllSecurityTips (){
-        return securityTipRepository.findAll();
+
+    public Sos saveSos(Sos sos) {
+        return sosRepository.save(sos);
+    }
+    //Pegar um SOS pelo ID
+    public Sos getSosById(Long id) {
+        return sosRepository.findById(id).orElse(null);
     }
 
-    public List <SecurityPost> getAllSecurityPosts(){
-        return securityPostRepository.findAll();
+    public List<Sos> getAllSos() {
+        return sosRepository.findAll();
+    }
+    public Sos updateSos(Long id, Sos sos) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+        Sos existingSos = sosRepository.findById(id).orElse(null);
+        if (existingSos != null) {
+            existingSos.setNome(sos.getNome());
+            existingSos.setDica(sos.getDica());
+            existingSos.setLocalizacao(sos.getLocalizacao());
+
+            return sosRepository.save(existingSos);
+        }
+        return null;
     }
 
-    public SecurityTip addSecurityTip(SecurityTip securityTip){
-        return securityTipRepository.save(securityTip);
-    }
-    public SecurityPost addSecurityPost(SecurityPost securityPost){
-        return securityPostRepository.save(securityPost);
-    }
-    public User addUserSecurityTip(Long userId, Long tipId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        SecurityTip tip = securityTipRepository.findById(tipId).orElseThrow(() -> new RuntimeException("Tip not found"));
-        user.getSecurityTips().add(tip);
-        return userRepository.save(user);
+    public void deleteSos(Long id) {
+        sosRepository.deleteById(id);
     }
 
-    public User addUserSecurityPost(Long userId, Long postId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        SecurityPost post = securityPostRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
-        user.getSecurityPosts().add(post);
-        return userRepository.save(user);
-    }
-
-    public List<SecurityTip> getUserSecurityTips(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return List.copyOf(user.getSecurityTips());
-    }
-
-    public List<SecurityPost> getUserSecurityPosts(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return List.copyOf(user.getSecurityPosts());
-    }
 }

@@ -1,9 +1,10 @@
 package com.unijorge.ods16.controller;
 
-import com.unijorge.ods16.model.SecurityPost;
-import com.unijorge.ods16.model.SecurityTip;
+import com.unijorge.ods16.model.Report;
+import com.unijorge.ods16.model.Sos;
 import com.unijorge.ods16.service.SosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,23 +17,25 @@ public class SosController {
     @Autowired
     private SosService sosService;
 
-    @GetMapping("/security-tips")
-    public List<SecurityTip> getAllSecurityTips() {
-        return sosService.getAllSecurityTips();
+    @GetMapping("/list")
+    public List<Sos> getAll() {
+        return sosService.getAllSos();
     }
 
-    @GetMapping("/security-posts")
-    public List<SecurityPost> getAllSecurityPosts() {
-        return sosService.getAllSecurityPosts();
+    @PostMapping("/create")
+    public Sos addSos(@RequestBody Sos sos) {
+        return sosService.saveSos(sos);
+    }
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Sos updateReport(@PathVariable Long id, @RequestBody Sos sos) {
+        return sosService.updateSos(id, sos);
     }
 
-    @PostMapping("/security-tips")
-    public SecurityTip addSecurityTip(@RequestBody SecurityTip securityTip) {
-        return sosService.addSecurityTip(securityTip);
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteReport(@PathVariable Long id) {
+        sosService.deleteSos(id);
     }
 
-    @PostMapping("/security-posts")
-    public SecurityPost addSecurityPost(@RequestBody SecurityPost securityPost) {
-        return sosService.addSecurityPost(securityPost);
-    }
 }

@@ -61,7 +61,7 @@ public class User extends DateAudit {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "security_post_id")
     )
-    private Set<SecurityPost> securityPosts = new HashSet<>();
+    private Set<Sos> securityPosts = new HashSet<>();
 
     public User(){
 
@@ -130,10 +130,10 @@ public class User extends DateAudit {
         this.securityTips = securityTips;
     }
 
-    public Set<SecurityPost> getSecurityPosts(){
+    public Set<Sos> getSecurityPosts(){
         return securityPosts;
     }
-    public void setSecurityPosts(Set<SecurityPost> securityPosts){
+    public void setSecurityPosts(Set<Sos> securityPosts){
         this.securityPosts = securityPosts;
     }
 }
