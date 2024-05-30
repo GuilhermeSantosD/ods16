@@ -54,4 +54,5 @@ public class AuthService {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "Usuário registrado com sucesso!"));
     }
+
 }
