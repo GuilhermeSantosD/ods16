@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -18,9 +20,12 @@ public class Sos {
     private Long id;
     private String nome;
     private String localizacao;
-    private String dica;
+    private String descricao;
 
-    private boolean anonymous;
+
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime submissionDate = LocalDateTime.now();
 
     @ManyToOne
     private User user;

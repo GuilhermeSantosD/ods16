@@ -2,7 +2,7 @@ package com.unijorge.ods16.service;
 
 
 
-import com.unijorge.ods16.model.Report;
+
 import com.unijorge.ods16.model.Sos;
 import com.unijorge.ods16.repository.SosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class SosService {
         Sos existingSos = sosRepository.findById(id).orElse(null);
         if (existingSos != null) {
             existingSos.setNome(sos.getNome());
-            existingSos.setDica(sos.getDica());
+            existingSos.setDescricao(sos.getDescricao());
             existingSos.setLocalizacao(sos.getLocalizacao());
 
             return sosRepository.save(existingSos);
