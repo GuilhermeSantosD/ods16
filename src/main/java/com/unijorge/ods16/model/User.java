@@ -49,19 +49,6 @@ public class User extends DateAudit {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_security_tips",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "security_tip_id")
-    )
-    private Set<SecurityTip> securityTips = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_security_posts",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "security_post_id")
-    )
-    private Set<Sos> securityPosts = new HashSet<>();
 
     public User(){
 
@@ -122,18 +109,4 @@ public class User extends DateAudit {
         this.roles = roles;
     }
 
-    public Set<SecurityTip> getSecurityTips(){
-        return securityTips;
-
-    }
-    public void setSecurityTips(Set<SecurityTip> securityTips){
-        this.securityTips = securityTips;
-    }
-
-    public Set<Sos> getSecurityPosts(){
-        return securityPosts;
-    }
-    public void setSecurityPosts(Set<Sos> securityPosts){
-        this.securityPosts = securityPosts;
-    }
 }
